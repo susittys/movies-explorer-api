@@ -3,27 +3,32 @@ import bcrypt from 'bcryptjs';
 import isEmail from 'validator/lib/isEmail.js';
 import UnauthorizedError from '../errors/UnauthorizedError.js';
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    minlength: 2,
-    maxlength: 30,
-    default: 'Борюс Всемогущев',
-  },
-  email: {
-    type: String,
-    validate: {
-      validator: isEmail,
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      minlength: 2,
+      maxlength: 30,
+      default: 'Борюс Всемогущев',
     },
-    unique: true,
-    required: true,
+    email: {
+      type: String,
+      validate: {
+        validator: isEmail,
+      },
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      select: false,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    select: false,
-    required: true,
+  {
+    versionKey: false,
   },
-});
+);
 
 userSchema.statics.findUserByCredentials = function findUserByCredentials({ email, password }) {
   return this.findOne({ email }).select('+password')

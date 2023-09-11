@@ -24,30 +24,29 @@ export default () => {
       email: Joi.string().email().required(),
       password: Joi.string().required(),
       name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(30),
-      avatar: Joi.string().regex(regexUrl),
     }),
   });
 
   const createMovieValidator = celebrate({
     body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-      link: Joi.string()
-        .required()
-        .regex(regexUrl),
+      movieId: Joi.number().required(),
+      nameRU: Joi.string().required(),
+      nameEN: Joi.string().required(),
+      country: Joi.string().required(),
+      director: Joi.string().required(),
+      description: Joi.string().required(),
+      duration: Joi.number().required(),
+      year: Joi.number().required(),
+      image: Joi.string().required().regex(regexUrl),
+      thumbnail: Joi.string().required().regex(regexUrl),
+      trailerLink: Joi.string().required().regex(regexUrl),
     }),
   });
 
   const updUserInfoValidator = celebrate({
     body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-      about: Joi.string().required().min(2).max(30),
-    }),
-  });
-
-  const updUserAvatarValidator = celebrate({
-    body: Joi.object().keys({
-      avatar: Joi.string().required().regex(regexUrl),
+      email: Joi.string().email().required(),
+      name: Joi.string().required(),
     }),
   });
 
@@ -65,6 +64,5 @@ export default () => {
     createUserValidator,
     createMovieValidator,
     updUserInfoValidator,
-    updUserAvatarValidator,
   };
 };
