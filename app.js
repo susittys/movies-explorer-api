@@ -12,7 +12,7 @@ import { requestLogger, errorLogger } from './middlewares/logger.js';
 
 config();
 const {
-  PROD_PORT, ORIGIN,
+  PROD_PORT, ORIGIN, HOST, DB,
 } = process.env;
 const PORT = process.env.NODE_ENV === 'production' ? PROD_PORT : 3000;
 
@@ -21,17 +21,17 @@ const limiter = rateLimit({
   max: 100, // 100 запросов с одного IP
 });
 
-mongoose.connect('mongodb://127.0.0.1:27017/askfilmsbd', {
+mongoose.connect(HOST + DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 const app = express();
 
-// app.use(cors({
-//     credentials: true,
-//     origin: ORIGIN,
-// }));
+app.use(cors({
+  credentials: true,
+  origin: ORIGIN,
+}));
 
 app.use(helmet());
 
