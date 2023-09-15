@@ -61,20 +61,20 @@ const createUser = (req, res, next) => {
       password: hash,
     }))
     .then(({
-      _id, name, about, avatar, email,
+      _id, name, email,
     }) => handleResCookies(res, {
-      _id, name, about, avatar, email,
+      _id, name, email,
     }, true))
     .catch((err) => handlerError(res, err, next));
 };
 
 const updateProfile = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
 
   const idUser = req.user._id;
 
   User
-    .findByIdAndUpdate(idUser, { name, about }, { new: true, runValidators: true })
+    .findByIdAndUpdate(idUser, { name, email }, { new: true, runValidators: true })
     .then((user) => handlerResult(res, user))
     .catch((err) => handlerError(res, err, next));
 };
@@ -95,9 +95,9 @@ const getUserMe = (req, res, next) => {
   User
     .findById(idUser)
     .then(({
-      _id, email, name, about, avatar,
+      _id, email, name,
     }) => handlerResult(res, {
-      _id, email, name, about, avatar,
+      _id, email, name,
     }))
     .catch((err) => handlerError(res, err, next));
 };
@@ -108,10 +108,10 @@ const login = (req, res, next) => User.findUserByCredentials({
 })
   .then((user) => {
     const {
-      _id, name, about, avatar, email,
+      _id, name, email,
     } = user;
     handleResCookies(res, {
-      _id, name, about, avatar, email,
+      _id, name, email,
     });
   })
   .catch(next);

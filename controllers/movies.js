@@ -18,9 +18,11 @@ const handlerResult = (res, data, newRes = false) => {
 };
 
 const getMovies = (req, res, next) => {
+  const owner = req.user._id;
+
   Movie
-    .find({})
-    .populate(['owner'])
+    .find({ owner })
+    .populate('owner')
     .sort({ _id: -1 })
     .then((movies) => handlerResult(res, movies))
     .catch((err) => handlerError(res, err, next));

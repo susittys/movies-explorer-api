@@ -32,7 +32,7 @@ const movieSchema = new mongoose.Schema(
       required: true,
     },
     year: {
-      type: Number,
+      type: String,
       required: true,
     },
     owner: {
@@ -60,10 +60,6 @@ const movieSchema = new mongoose.Schema(
       validate: {
         validator: isURL,
       },
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
     },
   },
   {

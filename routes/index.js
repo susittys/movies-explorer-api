@@ -13,9 +13,11 @@ const rootRouter = Router();
 const { createUserValidator, loginUserValidator } = Validator();
 rootRouter.post('/signup', createUserValidator, createUser);
 rootRouter.post('/signin', loginUserValidator, login);
-rootRouter.get('/logout', logOut);
 
 rootRouter.use(auth);
+
+rootRouter.get('/signout', logOut);
+
 rootRouter.use('/users', users);
 rootRouter.use('/movies', movies);
 
